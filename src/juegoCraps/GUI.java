@@ -122,8 +122,6 @@ public class GUI extends JFrame {
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
     private class Escucha implements ActionListener {
-
-
         @Override
         public void actionPerformed(ActionEvent e) {
             modelCraps.calcularTiro();
@@ -142,15 +140,20 @@ public class GUI extends JFrame {
 
             modelCraps.determinarJuego();
 
-
+            if(flag==0){
                 panelResultados.removeAll();
                 panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados "));
                 panelResultados.add(resultadosDados);
                 panelResultados.add(separator);
                 panelResultados.add(mensajesSalida);
-                resultadosDados.setText(modelCraps.getEstadoToString()[0]);
-                mensajesSalida.setRows(4);
-                mensajesSalida.setText(modelCraps.getEstadoToString()[1]);
+                revalidate();
+                repaint();
+            }else{
+
+            }
+            resultadosDados.setText(modelCraps.getEstadoToString()[0]);
+            mensajesSalida.setRows(4);
+            mensajesSalida.setText(modelCraps.getEstadoToString()[1]);
         }
     }
 }
