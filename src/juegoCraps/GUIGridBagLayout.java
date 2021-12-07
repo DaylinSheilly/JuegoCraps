@@ -30,7 +30,8 @@ public class GUIGridBagLayout extends JFrame {
         initGUI();
         //Default JFrame configuration
         this.setTitle("Juego Craps");
-        //this.setSize(200,100);
+        this.setUndecorated(true);
+        this.setBackground(new Color(255,255,255,0));
         this.pack();
         this.setResizable(true);
         this.setVisible(true);
@@ -54,7 +55,7 @@ public class GUIGridBagLayout extends JFrame {
         constraints.gridwidth=2;
         constraints.fill=GridBagConstraints.HORIZONTAL;
 
-        this.add(headerProject,constraints); //Change this line if you change JFrame Container's Layout
+        this.add(headerProject, constraints); //Change this line if you change JFrame Container's Layout
         ayuda = new JButton(" ? ");
         ayuda.addActionListener(escucha);
         constraints.gridx=0;
@@ -63,7 +64,7 @@ public class GUIGridBagLayout extends JFrame {
         constraints.fill=GridBagConstraints.NONE;
         constraints.anchor=GridBagConstraints.LINE_START;
 
-        this.add(ayuda,constraints);
+        this.add(ayuda, constraints);
 
         salir = new JButton("Salir");
         salir.addActionListener(escucha);
@@ -73,7 +74,63 @@ public class GUIGridBagLayout extends JFrame {
         constraints.fill=GridBagConstraints.NONE;
         constraints.anchor=GridBagConstraints.LINE_END;
 
-        this.add(salir,constraints);
+        this.add(salir, constraints);
+
+        imageDado = new ImageIcon(getClass().getResource("/resources/dado.png"));
+        imagenOtroTamanho = imageDado.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        imagenNuevoTamanho = new ImageIcon(imagenOtroTamanho);
+        dado1 = new JLabel(imagenNuevoTamanho);
+        dado2 = new JLabel(imagenNuevoTamanho);
+
+        panelDados = new JPanel();
+        panelDados.setPreferredSize(new Dimension(450,250));
+        panelDados.setBorder(BorderFactory.createTitledBorder("Tus Dados"));
+        panelDados.add(dado1);
+        panelDados.add(dado2);
+
+        constraints.gridx=0;
+        constraints.gridy=2;
+        constraints.gridwidth=1;
+        constraints.fill=GridBagConstraints.BOTH;
+        constraints.anchor=GridBagConstraints.CENTER;
+
+        add(panelDados, constraints);
+
+        resultadosDados = new JTextArea(4,31);
+        resultadosDados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+        resultadosDados.setText("Debes lanzar los dados");
+        resultadosDados.setBackground(null);
+        resultadosDados.setEditable(false);
+
+        constraints.gridx=1;
+        constraints.gridy=2;
+        constraints.gridwidth=1;
+        constraints.fill=GridBagConstraints.BOTH;
+        constraints.anchor=GridBagConstraints.CENTER;
+        add(resultadosDados, constraints);
+
+        lanzar = new JButton("lanzar");
+        lanzar.addActionListener(escucha);
+        constraints.gridx=0;
+        constraints.gridy=3;
+        constraints.gridwidth=2;
+        constraints.fill=GridBagConstraints.NONE;
+        constraints.anchor=GridBagConstraints.CENTER;
+        this.add(lanzar, constraints);
+
+        mensajesSalida = new JTextArea(4,31);
+        mensajesSalida.setText("Usa el botón (?) para ver las reglas del juego");
+        mensajesSalida.setBorder(BorderFactory.createTitledBorder("Mensajes "));
+        mensajesSalida.setBackground(null);
+        mensajesSalida.setEditable(false);
+        constraints.gridx=0;
+        constraints.gridy=4;
+        constraints.gridwidth=2;
+        constraints.fill=GridBagConstraints.NONE;
+        constraints.anchor=GridBagConstraints.CENTER;
+        add(mensajesSalida, constraints);
+
+
 
 
     }
@@ -87,24 +144,25 @@ public class GUIGridBagLayout extends JFrame {
     private class Escucha implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            modelCraps.calcularTiro();
-            int[] caras = modelCraps.getCaras();
-
-            imageDado = new ImageIcon(getClass().getResource("/resources/"+caras[0]+".png"));
-            imagenOtroTamanho = imageDado.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-            imagenNuevoTamanho = new ImageIcon(imagenOtroTamanho);
-            dado1.setIcon(imagenNuevoTamanho);
-
-            imageDado = new ImageIcon(getClass().getResource("/resources/"+caras[1]+".png"));
-            imagenOtroTamanho = imageDado.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-            imagenNuevoTamanho = new ImageIcon(imagenOtroTamanho);
-            dado2.setIcon(imagenNuevoTamanho);
-
-            modelCraps.determinarJuego();
-
-            resultadosDados.setText(modelCraps.getEstadoToString()[0]);
-            mensajesSalida.setRows(4);
-            mensajesSalida.setText(modelCraps.getEstadoToString()[1]);
+            if(e.getSource()==lanzar){
+                modelCraps.calcularTiro();
+                int[] caras = modelCraps.getCaras();
+                imageDado = new ImageIcon(getClass().getResource("/resources/"+caras[0]+".png"));
+                imagenOtroTamanho = imageDado.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                imagenNuevoTamanho = new ImageIcon(imagenOtroTamanho);
+                dado1.setIcon(imagenNuevoTamanho);
+                imageDado = new ImageIcon(getClass().getResource("/resources/"+caras[1]+".png"));
+                imagenOtroTamanho = imageDado.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                imagenNuevoTamanho = new ImageIcon(imagenOtroTamanho);
+                dado2.setIcon(imagenNuevoTamanho);
+                modelCraps.determinarJuego();
+                resultadosDados.setText(modelCraps.getEstadoToString()[0]);
+                mensajesSalida.setText(modelCraps.getEstadoToString()[1]);
+            }else if(e.getSource()==ayuda){
+                JOptionPane.showMessageDialog(null, MENSAJE_INICIO);
+            }else{
+                System.exit(0);
+            }
         }
     }
 
