@@ -31,7 +31,7 @@ public class GUIGridBagLayout extends JFrame {
         //Default JFrame configuration
         this.setTitle("Juego Craps");
         this.setUndecorated(true);
-        this.setBackground(new Color(255,255,255,0));
+        getContentPane().setBackground(new Color(209,171,255));
         this.pack();
         this.setResizable(true);
         this.setVisible(true);
@@ -49,7 +49,7 @@ public class GUIGridBagLayout extends JFrame {
         escucha = new Escucha();
         modelCraps = new ModelCraps();
         //Set up JComponents
-        headerProject = new Header("Mesa Juego Craps", Color.BLACK);
+        headerProject = new Header("Mesa Juego Craps", Color.GRAY);
         constraints.gridx=0;
         constraints.gridy=0;
         constraints.gridwidth=2;
@@ -57,7 +57,10 @@ public class GUIGridBagLayout extends JFrame {
 
         this.add(headerProject, constraints); //Change this line if you change JFrame Container's Layout
         ayuda = new JButton(" ? ");
+        ayuda.setFont(new Font("SansSerif", Font.BOLD+Font.PLAIN, 14));
+        ayuda.setForeground(Color.white);
         ayuda.addActionListener(escucha);
+        ayuda.setBackground(new Color(0,102,255));
         constraints.gridx=0;
         constraints.gridy=1;
         constraints.gridwidth=1;
@@ -67,7 +70,10 @@ public class GUIGridBagLayout extends JFrame {
         this.add(ayuda, constraints);
 
         salir = new JButton("Salir");
+        salir.setFont(new Font("SansSerif", Font.BOLD+Font.PLAIN, 14));
+        salir.setForeground(Color.WHITE);
         salir.addActionListener(escucha);
+        salir.setBackground(new Color(255, 81,51));
         constraints.gridx=1;
         constraints.gridy=1;
         constraints.gridwidth=1;
@@ -85,6 +91,7 @@ public class GUIGridBagLayout extends JFrame {
         panelDados = new JPanel();
         panelDados.setPreferredSize(new Dimension(450,250));
         panelDados.setBorder(BorderFactory.createTitledBorder("Tus Dados"));
+        panelDados.setBackground(Color.WHITE);
         panelDados.add(dado1);
         panelDados.add(dado2);
 
@@ -99,7 +106,7 @@ public class GUIGridBagLayout extends JFrame {
         resultadosDados = new JTextArea(4,31);
         resultadosDados.setBorder(BorderFactory.createTitledBorder("Resultados"));
         resultadosDados.setText("Debes lanzar los dados");
-        resultadosDados.setBackground(null);
+        resultadosDados.setBackground(Color.WHITE);
         resultadosDados.setEditable(false);
 
         constraints.gridx=1;
@@ -110,7 +117,9 @@ public class GUIGridBagLayout extends JFrame {
         add(resultadosDados, constraints);
 
         lanzar = new JButton("lanzar");
+        lanzar.setFont(new Font("SansSerif", Font.BOLD+Font.PLAIN, 14));
         lanzar.addActionListener(escucha);
+        lanzar.setBackground(new Color(63,255,51));
         constraints.gridx=0;
         constraints.gridy=3;
         constraints.gridwidth=2;
@@ -121,7 +130,7 @@ public class GUIGridBagLayout extends JFrame {
         mensajesSalida = new JTextArea(4,31);
         mensajesSalida.setText("Usa el botón (?) para ver las reglas del juego");
         mensajesSalida.setBorder(BorderFactory.createTitledBorder("Mensajes "));
-        mensajesSalida.setBackground(null);
+        mensajesSalida.setBackground(Color.white);
         mensajesSalida.setEditable(false);
         constraints.gridx=0;
         constraints.gridy=4;
